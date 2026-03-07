@@ -5,6 +5,7 @@
 template <typename T>
 class MyVector {
     public:
+        using value_type = T;
         MyVector() {
             std::cout << "Default constructor called" << std::endl;
         }
