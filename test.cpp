@@ -1,7 +1,13 @@
 #include <iostream>
-#include <memory_resource>
+#include <array>
+
+struct A {
+    int t[10];
+};
 
 
 int main() {
-    std::pmr::vector<int> vec;
+    std::array<int, 20> v;
+    A a;
+    std::cout << sizeof(v);
 }
