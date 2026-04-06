@@ -64,7 +64,7 @@ class Tuple<T, Ts...> : private Tuple<Ts...> {
 };
 
 template <size_t N, typename... Ts, template <typename...> class Tuple>
-auto get(Tuple<Ts...>& tuple) {
+constexpr auto get(Tuple<Ts...>& tuple) {
     if constexpr (N == 0) {
         return tuple.value;
     }
@@ -72,6 +72,15 @@ auto get(Tuple<Ts...>& tuple) {
         return get<N - 1>(tuple.rest);
     }
 }
+
+template <typename T>
+struct tuple_size;
+
+template <typename... Ts>
+struct tuple_size<Tuple<Ts...>> : std::integral_constant<std::size_t, sizeof...(Ts)> {};
+
+template <typename T>
+constexpr std::size_t tuple_size_v = tuple_size<T>::value;
 
 template <typename... Ts>
 Tuple(Ts...) -> Tuple<Ts...>;
@@ -82,5 +91,6 @@ int main() {
     Tuple s = std::move(t);
     std::cout << "hi" << std::endl;
     
-    std::cout << get<1>(t);
+    std::cout << get<1>(t) << std::endl;
+    std::cout << tuple_size_v<decltype(s)> << std::endl;
 }
