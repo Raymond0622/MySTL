@@ -6,6 +6,7 @@
 #include <mutex>
 
 
+
 template <typename Key, typename Value>
 class LockFreeList {
     public:
@@ -134,7 +135,6 @@ class LockFreeUnorderedMap {
             map.resize(buckets);
         }
         LockFreeUnorderedMap() {
-            std::cout << "hi";
             hasher = Hash{};
             buckets = 17;
             map.resize(buckets);
@@ -162,7 +162,7 @@ class LockFreeUnorderedMap {
         } 
     private:
         std::size_t n_elements = 0;
-        std::size_t buckets = 17;
+        std::size_t buckets = 1e9;
         std::vector<LockFreeList<Key, Value>> map;
         Hash hasher;
 };
@@ -174,4 +174,9 @@ int main() {
     map[1] = 1;
     std::cout << map[1];
     std::cout << map.size();
+    //std::vector<std::jthread> pool(4);
+    const int N = 1e9;
+    for (int i = 0; i < N;i++) {
+        map[i] = i;
+    }
 }
